@@ -1,0 +1,15 @@
+{
+  "plugins": [
+    ["module-resolver", {
+      "alias": {
+        "@validators": "./src/validators",
+        "@model": "./src/model"
+      }
+    }],
+    "@babel/plugin-proposal-export-default-from",
+	  "@babel/plugin-proposal-class-properties"
+  ],
+  "presets": [
+    "@babel/preset-env"
+  ]
+}
