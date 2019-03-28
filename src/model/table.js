@@ -7,11 +7,16 @@ export default Klass => {
       return _.snakeCase(pluralize(this.name));
     }
 
+    static get columnNames() {
+      return Object.keys(this.columns);
+    }
+
     static get knex() {
       return this.__knex(this.tableName);
     }
 
     static async __loadTable() {
+      if (this.columns) return;
       this.columns = await this.knex.columnInfo();
 
       Object.keys(this.columns).forEach(column => {
@@ -21,12 +26,14 @@ export default Klass => {
           },
           set(value) {
             this.attributes[column] = value;
+            this.updatedAttributes.add(column);
           }
         });
       });
     }
 
     attributes = {};
+    updatedAttributes = new Set();
 
     constructor(values) {
       super(values);

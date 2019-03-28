@@ -3,7 +3,9 @@ export default Klass => {
     static get hooks() {
       if(!this.__hooks) {
         this.__hooks = {
+          beforeSave: [],
           beforeCreate: [],
+          beforeUpdate: [],
           beforeDestroy: []
         }
       }
@@ -11,8 +13,16 @@ export default Klass => {
       return this.__hooks;
     }
 
+    static beforeSave(fn) {
+      this.hooks.beforeSave.push(fn);
+    }
+
     static beforeCreate(fn) {
       this.hooks.beforeCreate.push(fn);
+    }
+
+    static beforeUpdate(fn) {
+      this.hooks.beforeUpdate.push(fn);
     }
 
     static beforeDestroy(fn) {

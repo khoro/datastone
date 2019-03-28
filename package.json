@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "test": "jest",
-    "test:dev": "jest --watchAll"
+    "test": "jest --runInBand",
+    "test:dev": "jest --watchAll --runInBand"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.4.0",
@@ -9,8 +9,9 @@
     "@babel/polyfill": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
     "babel-plugin-module-resolver": "^3.2.0",
+    "faker": "^4.1.0",
     "jest": "^24.5.0",
-    "sqlite3": "^4.0.6"
+    "pg": "^7.9.0"
   },
   "dependencies": {
     "knex": "^0.16.3",

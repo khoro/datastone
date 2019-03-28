@@ -20,7 +20,7 @@ export default class Relation {
 
     return new Promise((resolve, reject) => {
       this.query.then(result => {
-        resolve(result[0]['count(*)'])
+        resolve(Number(Object.values(result[0])[0]));
       })
       .catch(reject);
     });
@@ -56,6 +56,21 @@ export default class Relation {
       })
       .catch(reject);
     });
+  }
+
+  get last() {
+    this.query = this.query.limit(1).orderBy('id', 'desc');
+    return new Promise((resolve, reject) => {
+      this.query.then(result => {
+        if (result.length) resolve(new this.model(result[0]));
+        else resolve(null);
+      })
+      .catch(reject);
+    });
+  }
+
+  find(id) {
+    return this.findBy({ id });
   }
 
   findBy(query) {

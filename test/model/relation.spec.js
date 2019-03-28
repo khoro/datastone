@@ -18,6 +18,10 @@ describe('src/model/relation', () => {
     await Model.__loadModels();
   });
 
+  afterAll(() => {
+    Model.__knex.destroy();
+  });
+
   it('returns correct model', async () => {
     expect((await User.all)[0] instanceof User).toBe(true);
   });
@@ -48,12 +52,12 @@ describe('src/model/relation', () => {
 
   describe('#where', () => {
     it('returns conditional data', async () => {
-      const records = await User.where({ isActive: 1 });
+      const records = await User.where({ isActive: true });
       expect(records.map(i => i.id)).toEqual([1, 2, 4]);
     });
 
     it('allows string query', async () => {
-      const records = await User.where('isActive = ? AND balance > 2', 1);
+      const records = await User.where('"isActive" = ? AND balance > 2', true);
       expect(records.map(i => i.id)).toEqual([2, 4]);
     });
   });
@@ -70,10 +74,29 @@ describe('src/model/relation', () => {
     });
   });
 
+  describe('#last', () => {
+    it('returns the last record', async () => {
+      const user = await User.last;
+      expect(user.id).toBe(5);
+    });
+
+    it('returns null if no data', async () => {
+      const user = await User.where('1 = 2').last;
+      expect(user).toBe(null);
+    });
+  });
+
   describe('#findBy', () => {
     it('returns the correct record', async () => {
       const user = await User.findBy({ name: 'name3' });
       expect(user.id).toBe(3);
+    });
+  });
+
+  describe('#find', () => {
+    it('returns the correct record', async () => {
+      const user = await User.find(3);
+      expect(user.name).toBe('name3');
     });
   });
 
@@ -86,7 +109,7 @@ describe('src/model/relation', () => {
       expect(users[0].name).toBe('name1');
       expect(users[0].bio).toBe('bio1');
       expect(users[0].balance).toBe(1.5);
-      expect(users[0].isActive).toBe(1);
+      expect(users[0].isActive).toBe(true);
       // TODO: DateTime issue for sqlite
     });
   });

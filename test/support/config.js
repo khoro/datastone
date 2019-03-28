@@ -1,5 +1,4 @@
 export const dbConfig = {
-  client: 'sqlite',
-  connection: ':memory:',
-  useNullAsDefault: true
+  client: 'postgres',
+  connection: 'postgres://localhost/datastone_development'
 }

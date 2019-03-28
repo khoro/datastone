@@ -3,6 +3,7 @@ import knex from 'knex';
 import table from './table';
 import validations from './validations';
 import hooks from './hooks';
+import mutations from './mutations';
 
 class Model {
   static __models = {};
@@ -47,9 +48,17 @@ class Model {
     return new Relation(this).first;
   }
 
+  static get last() {
+    return new Relation(this).last;
+  }
+
   static findBy(...args) {
     return new Relation(this).findBy(...args);
   }
+
+  static find(...args) {
+    return new Relation(this).find(...args);
+  }
 }
 
-export default hooks(validations(table(Model)));
+export default mutations(hooks(validations(table(Model))));
