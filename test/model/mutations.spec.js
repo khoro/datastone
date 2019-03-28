@@ -40,14 +40,20 @@ describe('src/model/mutations', () => {
         expect(user.attributes).toEqual(lastUser.attributes);
       });
 
-      it('triggers beforeSave and beforeCreate hooks', async () => {
-        const cb1 = jest.fn();
-        const cb2 = jest.fn();
+      it('triggers beforeSave, beforeCreate, afterSave, afterCreate hooks', async () => {
+        const cb1 = asyncSpy();
+        const cb2 = asyncSpy();
+        const cb3 = asyncSpy();
+        const cb4 = asyncSpy();
         User.beforeSave(cb1);
         User.beforeCreate(cb2);
+        User.afterSave(cb3);
+        User.afterCreate(cb4);
         await new User(userFactory()).save();
-        expect(cb1.mock.calls.length).toBe(1);
-        expect(cb2.mock.calls.length).toBe(1);
+        expect(cb1.called).toBe(true);
+        expect(cb2.called).toBe(true);
+        expect(cb3.called).toBe(true);
+        expect(cb4.called).toBe(true);
       });
     });
 
@@ -59,15 +65,39 @@ describe('src/model/mutations', () => {
         expect((await User.find(1)).name).toBe('changed');
       });
 
-      it('triggers beforeSave and beforeUpdate hooks', async () => {
-        const cb1 = jest.fn();
-        const cb2 = jest.fn();
+      it('triggers beforeSave, beforeUpdate, afterSave, afterUpdate hooks', async () => {
+        const cb1 = asyncSpy();
+        const cb2 = asyncSpy();
+        const cb3 = asyncSpy();
+        const cb4 = asyncSpy();
         User.beforeSave(cb1);
         User.beforeUpdate(cb2);
+        User.afterSave(cb3);
+        User.afterUpdate(cb4);
         await (await User.find(1)).save();
-        expect(cb1.mock.calls.length).toBe(1);
-        expect(cb2.mock.calls.length).toBe(1);
+        expect(cb1.called).toBe(true);
+        expect(cb2.called).toBe(true);
+        expect(cb3.called).toBe(true);
+        expect(cb4.called).toBe(true);
       });
+    });
+  });
+
+  describe('destroy', () => {
+    it('deletes the record', async () => {
+      const user = await User.find(1);
+      await user.destroy();
+      expect(await User.find(1)).toBe(null);
+    });
+
+    it('triggers beforeDestroy and afterDestroy hooks', async () => {
+      const cb1 = asyncSpy();
+      const cb2 = asyncSpy();
+      User.beforeDestroy(cb1);
+      User.afterDestroy(cb2);
+      await (await User.find(2)).destroy();
+      expect(cb1.called).toBe(true);
+      expect(cb2.called).toBe(true);
     });
   });
 });
