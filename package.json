@@ -1,9 +1,15 @@
 {
+  "name": "datastone",
+  "main": "lib/index.js",
+  "version": "0.0.2",
   "scripts": {
+    "build": "babel src -d lib",
     "test": "jest --runInBand",
-    "test:dev": "jest --watchAll --runInBand"
+    "test:dev": "jest --watchAll --runInBand",
+    "prepublish": "npm run build"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/plugin-proposal-export-default-from": "^7.2.0",
     "@babel/polyfill": "^7.4.0",
@@ -21,6 +27,9 @@
   "jest": {
     "setupFiles": [
       "./test/init.js"
+    ],
+    "setupFilesAfterEnv": [
+      "./test/support/mock.js"
     ]
   }
 }

@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export default Klass => {
   return class extends Klass {
     static get hooks() {
@@ -6,7 +8,8 @@ export default Klass => {
           beforeSave: [],
           beforeCreate: [],
           beforeUpdate: [],
-          beforeDestroy: []
+          beforeDestroy: [],
+          beforeValidate: []
         }
       }
 
@@ -29,9 +32,17 @@ export default Klass => {
       this.hooks.beforeDestroy.push(fn);
     }
 
+    static beforeValidate(fn) {
+      this.hooks.beforeValidate.push(fn);
+    }
+
     async trigger(hook) {
       for(let fn of this.constructor.hooks[hook]) {
-        await fn();
+        if (_.isFunction(fn)) {
+          await fn(this);
+        } else {
+          await this[fn]();
+        }
       }
     }
   }

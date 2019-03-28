@@ -59,25 +59,24 @@ describe('src/model/hooks', () => {
     });
 
     it('triggers snyc for async functions', async () => {
-      const responses = [];
-      const cb1 = () => new Promise(resolve => {
-        setTimeout(() => {
-          responses.push(1);
-          resolve();
-        }, 100);
-      });
-
-      const cb2 = () => new Promise(resolve => {
-        setTimeout(() => {
-          responses.push(2);
-          resolve();
-        }, 0);
-      });
+      const cb1 = asyncSpy({ timeout: 100 });
+      const cb2 = asyncSpy({ timeout: 1 });
 
       TriggerModel.beforeCreate(cb1);
       TriggerModel.beforeCreate(cb2);
       await new TriggerModel().trigger('beforeCreate');
-      expect(responses).toEqual([1, 2]);
+
+      expect(cb1.called).toBe(true);
+      expect(cb2.called).toBe(true);
+      expect(cb1.finishedAt < cb2.finishedAt).toBe(true)
+    });
+
+    it('may trigger instance method', async () => {
+      const cb = asyncSpy();
+      TriggerModel.prototype.myCallback = () => cb();
+      TriggerModel.beforeCreate('myCallback');
+      await new TriggerModel().trigger('beforeCreate');
+      expect(cb.called).toBe(true);
     });
   });
 });

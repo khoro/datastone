@@ -32,6 +32,8 @@ export default Klass => {
       this.__errors = new Errors();
 
       return new Promise(async (resolve) => {
+        await this.trigger('beforeValidate');
+
         for(let item of this.constructor.validations) {
           for(let validatorName in item.validations) {
             const ValidatorClass = this.constructor.validators[validatorName];
