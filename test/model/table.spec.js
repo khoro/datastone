@@ -1,4 +1,5 @@
 import table from '@model/table';
+import { dbConfig } from '../support/config';
 
 const Table = table(class {});
 
