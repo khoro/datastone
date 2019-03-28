@@ -1,9 +1,9 @@
 import { PresenceValidator } from '@validators';
-import validations from '@model/validations';
+import Model from '@model/model';
 
-const TestModel = validations(class {});
+class TestModel extends Model {}
 
-describe('src/validators/presence-validator', () => {
+describe('src/validators/presence', () => {
   let record;
 
   beforeEach(() => {
