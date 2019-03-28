@@ -3,6 +3,10 @@ import _ from 'lodash';
 export default Klass => {
   return class extends Klass {
     async save() {
+      if (!await this.isValid) {
+        return false;
+      }
+
       let result;
       const date = new Date().toUTCString();
 
@@ -29,6 +33,9 @@ export default Klass => {
       await this.trigger('afterSave');
 
       this.set(result[0]);
+      this.updatedAttributes = new Set();
+
+      return true;
     }
 
     async destroy() {

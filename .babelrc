@@ -2,6 +2,7 @@
   "plugins": [
     ["module-resolver", {
       "alias": {
+        "@src": "./src",
         "@validators": "./src/validators",
         "@model": "./src/model"
       }

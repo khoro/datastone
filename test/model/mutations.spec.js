@@ -1,4 +1,4 @@
-import Model from '@model/model';
+import { Model } from '@src';
 import createKnex from 'knex';
 import { dbConfig } from '../support/config';
 import { seedData } from '../support/seed';
@@ -80,6 +80,17 @@ describe('src/model/mutations', () => {
         expect(cb3.called).toBe(true);
         expect(cb4.called).toBe(true);
       });
+    });
+
+    it('returns true if it is valid', async () => {
+      const user = new User(userFactory());
+      expect(await user.save()).toBe(true);
+    });
+
+    it('returns false if it is not valid', async () => {
+      User.validates('name', { presence: true });
+      const user = new User();
+      expect(await user.save()).toBe(false);
     });
   });
 
