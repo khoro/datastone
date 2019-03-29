@@ -25,19 +25,23 @@ export default Klass => {
             return this.attributes[column];
           },
           set(value) {
+            if (this.attributes[column] !== value) {
+              this.changed.add(column);
+            }
+
             this.attributes[column] = value;
-            this.updatedAttributes.add(column);
           }
         });
       });
     }
 
     attributes = {};
-    updatedAttributes = new Set();
+    changed = new Set();
 
     constructor(values) {
       super(values);
       this.set(values);
+      if (this.id) this.changed = new Set();
     }
 
     set(key, value) {

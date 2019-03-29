@@ -16,7 +16,7 @@ export default Klass => {
         await this.trigger('beforeUpdate');
         this.set({ updatedAt: date });
         result = await this.constructor.knex.where({ id: this.id }).update(
-          _.pick(this.attributes, ...this.updatedAttributes),
+          _.pick(this.attributes, ...this.changed),
           this.constructor.columnNames
         );
         await this.trigger('afterUpdate');
@@ -24,7 +24,7 @@ export default Klass => {
         await this.trigger('beforeCreate');
         this.set({ createdAt: date, updatedAt: date });
         result = await this.constructor.knex.insert(
-          _.pick(this.attributes, ...this.updatedAttributes),
+          _.pick(this.attributes, ...this.changed),
           this.constructor.columnNames
         );
         await this.trigger('afterCreate');
@@ -33,7 +33,7 @@ export default Klass => {
       await this.trigger('afterSave');
 
       this.set(result[0]);
-      this.updatedAttributes = new Set();
+      this.changed = new Set();
 
       return true;
     }

@@ -18,7 +18,13 @@ export default class UniquenessValidator extends Validator {
       }
     }
 
-    if(await this.model.where(query).first) {
+    let hasChange = false;
+
+    Object.keys(query).forEach(field => {
+      if (this.record.changed.has(field)) hasChange = true;
+    });
+
+    if(hasChange && await this.model.where(query).first) {
       this.record.errors.add(this.field, this.message);
     }
   }
