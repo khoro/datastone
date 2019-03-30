@@ -12,6 +12,10 @@ class Model {
     this.__models[this.name] = this;
   }
 
+  static disconnect() {
+    return this.__knex.destroy();
+  }
+
   static async configure(config) {
     this.__knex = knex(config);
     await this.__loadModels();
@@ -58,6 +62,18 @@ class Model {
 
   static find(...args) {
     return new Relation(this).find(...args);
+  }
+
+  static limit(...args) {
+    return new Relation(this).limit(...args);
+  }
+
+  static offset(...args) {
+    return new Relation(this).offset(...args);
+  }
+
+  static order(...args) {
+    return new Relation(this).order(...args);
   }
 }
 

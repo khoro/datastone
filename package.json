@@ -1,7 +1,7 @@
 {
   "name": "datastone",
   "main": "lib/index.js",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "scripts": {
     "build": "babel src -d lib",
     "test": "jest --runInBand",

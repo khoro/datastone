@@ -41,8 +41,8 @@ const data = {
     ['mail1@mail.com', 'pass1', 'name1', 'bio1', 1.5, 1, date, date],
     ['mail2@mail.com', 'pass2', 'name2', 'bio2', 2.5, 1, date, date],
     ['mail3@mail.com', 'pass3', 'name3', 'bio3', 3.5, 0, date, date],
-    ['mail4@mail.com', 'pass4', 'name4', 'bio4', 4.5, 1, date, date],
-    ['mail5@mail.com', 'pass5', 'name5', 'bio5', 5.5, 0, date, date]
+    ['mail4@mail.com', 'pass4', 'name4', 'bio4', 5.5, 1, date, date],
+    ['mail5@mail.com', 'pass5', 'name5', 'bio5', 4.5, 0, date, date]
   ]
 }
 

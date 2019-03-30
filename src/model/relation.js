@@ -77,6 +77,28 @@ export default class Relation {
     return this.where(query).first;
   }
 
+  limit(count) {
+    this.query = this.query.limit(count);
+    return this;
+  }
+
+  offset(count) {
+    this.query = this.query.offset(count);
+    return this;
+  }
+
+  order(query) {
+    if (_.isPlainObject(query)) {
+      const orderQuery = [];
+      _.each(query, (order, column) => orderQuery.push({ column, order }));
+      this.query = this.query.orderBy(orderQuery);
+    } else {
+      this.query = this.query.orderByRaw(query);
+    }
+
+    return this;
+  }
+
   then(fn) {
     return this.query.then(rows => {
       rows = rows.map(item => new this.model(item));

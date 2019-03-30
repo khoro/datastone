@@ -27,7 +27,7 @@ describe('src/model/mutations', () => {
   });
 
   afterAll(() => {
-    Model.__knex.destroy();
+    Model.disconnect();
   });
 
   describe('#save', () => {

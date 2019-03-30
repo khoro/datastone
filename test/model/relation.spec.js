@@ -19,7 +19,7 @@ describe('src/model/relation', () => {
   });
 
   afterAll(() => {
-    Model.__knex.destroy();
+    Model.disconnect();
   });
 
   it('returns correct model', async () => {
@@ -97,6 +97,30 @@ describe('src/model/relation', () => {
     it('returns the correct record', async () => {
       const user = await User.find(3);
       expect(user.name).toBe('name3');
+    });
+  });
+
+  describe('#limit', () => {
+    it('returns limited records', async () => {
+      expect((await User.limit(3)).length).toBe(3);
+    });
+  });
+
+  describe('#offset', () => {
+    it('returns offsetted records', async () => {
+      expect((await User.offset(1)).length).toBe(4);
+      expect((await User.offset(2).first).id).toBe(3);
+    });
+  });
+
+  describe('#order', () => {
+    it('returns ordered records correctly if provided string', async () => {
+      expect((await User.order('id desc').first).id).toBe(5);
+    });
+
+    it('returns ordered records correctly if provided object', async () => {
+      expect((await User.order({ balance: 'desc' }).first).id).toBe(4);
+      expect((await User.order({ balance: 'asc' }).first).id).toBe(1);
     });
   });
 

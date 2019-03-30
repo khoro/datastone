@@ -2,6 +2,10 @@ import Model from '@model/model';
 import { dbConfig } from '../support/config';
 
 describe('src/model/model', () => {
+  afterAll(() => {
+    Model.disconnect();
+  });
+
   describe('#register', () => {
     it('registers the models', () => {
       class Model1 extends Model {}
