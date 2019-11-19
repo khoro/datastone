@@ -1,7 +1,7 @@
 {
   "name": "datastone",
   "main": "lib/index.js",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "scripts": {
     "build": "babel src -d lib",
     "test": "jest --runInBand",
@@ -17,10 +17,10 @@
     "babel-plugin-module-resolver": "^3.2.0",
     "faker": "^4.1.0",
     "jest": "^24.5.0",
-    "pg": "^7.9.0"
+    "pg": "^7.12.1"
   },
   "dependencies": {
-    "knex": "^0.19.5",
+    "knex": "^0.20.2",
     "lodash": "^4.17.15",
     "pluralize": "^7.0.0"
   },
