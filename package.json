@@ -1,7 +1,7 @@
 {
   "name": "datastone",
   "main": "lib/index.js",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "scripts": {
     "build": "babel src -d lib",
     "test": "jest --runInBand",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "knex": "^0.16.3",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "pluralize": "^7.0.0"
   },
   "jest": {
