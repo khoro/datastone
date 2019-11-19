@@ -1,9 +1,9 @@
 import _ from 'lodash';
 
 export default class Relation {
-  constructor(model) {
+  constructor(model, query) {
     this.model = model;
-    this.query = this.model.knex;
+    this.query = query || this.model.knex;
   }
 
   get all() {

@@ -4,6 +4,7 @@ import table from './table';
 import validations from './validations';
 import hooks from './hooks';
 import mutations from './mutations';
+import associations from './associations';
 
 class Model {
   static __models = {};
@@ -77,4 +78,4 @@ class Model {
   }
 }
 
-export default mutations(hooks(validations(table(Model))));
+export default associations(mutations(hooks(validations(table(Model)))));
